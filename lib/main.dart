@@ -85,20 +85,30 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextField(
-                controller:controller,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: '',
+            children:[
+              Container(
+                alignment: Alignment.centerRight,
+                child: Text(display ,style: TextStyle(fontSize: 30),
                 ),
               ),
-              const SizedBox(height: 20), 
-              SizedBox(height: 20,)
-            ],
+              Expanded(child: Divider(),)
+            ]
+
           ),
         ),
       ),
     );
+  }
+
+  Widget buildButtonRows(List<String> button){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: button.map((label){
+        return buildButton(label);
+      }).toList(),
+    );
+  }
+  Widget buildButton(String label){
+    return Expanded (child: Padding(padding: const EdgeInsets.all(8.0),child: ElevatedButton(onPressed: () => ButtonClick(label), child: Text(label, style: TextStyle(fontSize: 20),)),),)
   }
 }
