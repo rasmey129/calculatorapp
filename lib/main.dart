@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
         firstOperand = double.parse(display);
         operator = value;
         display = '';
-      } else if (value == 'clear'){
+      } else if (value == 'CE'){
         display = '';
         firstOperand= 0;
         secondOperand = 0;
@@ -48,6 +48,8 @@ class _MyHomePageState extends State<MyHomePage> {
       } else if(value == '='){
         secondOperand = double.parse(display);
         display = calculate();
+      } else {
+        display += value;
       }
     });
    }
@@ -77,27 +79,26 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+      body: 
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
             children:[
               Container(
                 alignment: Alignment.centerRight,
                 child: Text(display ,style: TextStyle(fontSize: 30),
                 ),
               ),
-              Expanded(child: Divider(),)
-            ]
+              Expanded(child: Divider(),),
+              buildButtonRows(['7','8','9','+']),
+              buildButtonRows(['4','5','6','-']),
+              buildButtonRows(['1','2','3','*']),
+              buildButtonRows(['0','CE','=','/']),
 
+            ],
           ),
-        ),
-      ),
-    );
+        );
   }
 
   Widget buildButtonRows(List<String> button){
@@ -109,6 +110,16 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
   Widget buildButton(String label){
-    return Expanded (child: Padding(padding: const EdgeInsets.all(8.0),child: ElevatedButton(onPressed: () => ButtonClick(label), child: Text(label, style: TextStyle(fontSize: 20),)),),)
+    return Expanded (
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ElevatedButton(
+          onPressed: () => ButtonClick(label), 
+          child: Text(label, 
+          style: TextStyle(fontSize: 20),
+          )
+        ),
+       ),
+     );
   }
 }
