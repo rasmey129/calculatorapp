@@ -27,14 +27,14 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> { //setting the homepage for the app
   final TextEditingController controller = TextEditingController();
    String display = '';
    double firstOperand = 0;
    double secondOperand = 0;
    String operator = '';
 
-   void ButtonClick(String value){
+   void buttonClick(String value){ //logic for the number collection 
     setState(() {
       if(value == '+' || value == '-'|| value =='/' || value == '*'){
         firstOperand = double.parse(display);
@@ -55,7 +55,9 @@ class _MyHomePageState extends State<MyHomePage> {
    }
   String calculate(){
     double result = 0;
-    switch(operator){
+    String errorMessage = 'Error: dividing by zero';
+
+    switch(operator){ //logic for the calculator 
       case '+':
         result = firstOperand + secondOperand;
         break;
@@ -63,8 +65,9 @@ class _MyHomePageState extends State<MyHomePage> {
         result = firstOperand - secondOperand;
         break;
       case '/':
-        result = firstOperand / secondOperand;
-        break;
+        if (secondOperand == 0) {
+          return errorMessage; // Return error message when dividing by zero 
+        }
       case '*':
         result = firstOperand * secondOperand;
         break;
@@ -90,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Text(display ,style: TextStyle(fontSize: 30),
                 ),
               ),
-              Expanded(child: Divider(),),
+              Expanded(child: Divider(),), //button rows for the number pad 
               buildButtonRows(['7','8','9','+']),
               buildButtonRows(['4','5','6','-']),
               buildButtonRows(['1','2','3','*']),
@@ -110,11 +113,11 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
   Widget buildButton(String label){
-    return Expanded (
+    return Expanded ( //making the number row widget 
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ElevatedButton(
-          onPressed: () => ButtonClick(label), 
+          onPressed: () => buttonClick(label), 
           child: Text(label, 
           style: TextStyle(fontSize: 20),
           )
